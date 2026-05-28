@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>LP Counter</title>
 
@@ -33,11 +33,11 @@ body{
 }
 
 .startBox{
-    background:#1c1c1c;
-    padding:40px;
-    border-radius:28px;
     width:100%;
     max-width:450px;
+    background:#1b1b1b;
+    padding:40px;
+    border-radius:28px;
     display:flex;
     flex-direction:column;
     gap:18px;
@@ -50,7 +50,8 @@ body{
 }
 
 .input{
-    background:#2b2b2b;
+    width:100%;
+    background:#2a2a2a;
     border:none;
     outline:none;
     color:white;
@@ -83,137 +84,112 @@ body{
     display:flex;
 }
 
-/* PLAYER */
-
 .player{
     width:50%;
     height:100%;
-    padding:20px;
+    padding:25px;
     display:flex;
     flex-direction:column;
     align-items:center;
-    justify-content:flex-start;
+    justify-content:center;
     overflow:auto;
 }
 
 .player:nth-child(1){
-    border-right:3px solid #222;
+    border-right:3px solid #202020;
 }
 
 .playerName{
     font-size:clamp(24px, 3vw, 38px);
     font-weight:bold;
-    margin-top:5px;
     text-align:center;
 }
 
 .lp{
-    font-size:clamp(70px, 10vw, 140px);
+    font-size:clamp(70px, 10vw, 150px);
     font-weight:bold;
-    margin-top:25px;
+    margin-top:20px;
     text-align:center;
 }
 
 .plusMinus{
     display:flex;
-    gap:12px;
-    margin-top:15px;
+    gap:14px;
+    margin-top:25px;
 }
 
 .pmBtn{
-    width:clamp(48px, 7vw, 65px);
-    height:clamp(48px, 7vw, 65px);
+    width:70px;
+    height:70px;
     border:none;
-    border-radius:18px;
-    background:#2b2b2b;
+    border-radius:20px;
+    background:#262626;
     color:white;
-    font-size:clamp(24px, 4vw, 36px);
+    font-size:36px;
     cursor:pointer;
     transition:0.15s;
+}
+
+.pmBtn.selected{
+    background:#4f46e5;
 }
 
 .pmBtn:hover{
-    transform:scale(1.06);
-}
-
-.preview{
-    margin-top:18px;
-    min-height:40px;
-    font-size:clamp(18px, 3vw, 30px);
-    font-weight:bold;
-    color:#9e9e9e;
-    text-align:center;
-}
-
-/* NUMBER BUTTONS */
-
-.numberGrid{
-    margin-top:28px;
-    width:min(330px, 95%);
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:14px;
-}
-
-.numberBtn{
-    background:#232323;
-    color:white;
-    border:none;
-    padding:18px;
-    border-radius:18px;
-    font-size:clamp(18px, 3vw, 28px);
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.15s;
-}
-
-.numberBtn:hover{
     transform:scale(1.05);
 }
 
-.numberBtn.selected{
-    background:#4f46e5;
+.livePreview{
+    margin-top:20px;
+    font-size:28px;
+    color:#a1a1aa;
+    min-height:40px;
+    text-align:center;
 }
 
-/* OPERATIONS */
-
-.operationRow{
-    margin-top:22px;
-    display:flex;
-    gap:14px;
-    justify-content:center;
-    flex-wrap:wrap;
-}
-
-.operationBtn{
-    width:100px;
-    height:58px;
+.lpInput{
+    margin-top:18px;
+    width:min(340px, 90%);
+    background:#252525;
     border:none;
-    border-radius:18px;
-    background:#2b2b2b;
+    outline:none;
     color:white;
-    font-size:24px;
-    font-weight:bold;
+    padding:18px;
+    border-radius:20px;
+    text-align:center;
+    font-size:30px;
+}
+
+.quickButtons{
+    margin-top:20px;
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.quickBtn{
+    background:#232323;
+    color:white;
+    border:none;
+    padding:14px 18px;
+    border-radius:16px;
+    font-size:22px;
     cursor:pointer;
     transition:0.15s;
 }
 
-.operationBtn.selected{
-    background:#16a34a;
-}
-
-.operationBtn:disabled{
-    opacity:0.35;
-    cursor:not-allowed;
+.quickBtn:hover{
+    transform:scale(1.05);
 }
 
 .okBtn{
-    margin-top:26px;
+    margin-top:28px;
+    width:min(340px, 90%);
     background:#4f46e5;
     color:white;
     border:none;
-    padding:18px 40px;
-    border-radius:18px;
+    padding:18px;
+    border-radius:20px;
     font-size:28px;
     font-weight:bold;
     cursor:pointer;
@@ -238,22 +214,22 @@ body{
 }
 
 #winnerText{
-    font-size:clamp(42px, 7vw, 80px);
+    font-size:clamp(40px, 7vw, 80px);
     font-weight:bold;
     text-align:center;
 }
 
 #countdown{
-    margin-top:20px;
-    font-size:clamp(20px, 3vw, 32px);
-    color:#9e9e9e;
+    margin-top:18px;
+    color:#9ca3af;
+    font-size:clamp(18px, 3vw, 30px);
 }
 
 .hidden{
     display:none !important;
 }
 
-/* PORTRAIT MODE */
+/* PORTRAIT */
 
 @media (orientation: portrait){
 
@@ -273,36 +249,27 @@ body{
 
     .player:nth-child(1){
         border-right:none;
-        border-bottom:3px solid #222;
+        border-bottom:3px solid #202020;
     }
 
     .lp{
-        font-size:clamp(60px, 16vw, 120px);
+        font-size:clamp(70px, 18vw, 140px);
     }
 
-    .numberGrid{
+    .pmBtn{
+        width:65px;
+        height:65px;
+    }
+
+    .lpInput{
         width:95%;
-        max-width:450px;
-    }
-
-    .numberBtn{
-        padding:20px;
-        font-size:28px;
+        max-width:420px;
     }
 
     .okBtn{
         width:95%;
-        max-width:450px;
-        margin-bottom:25px;
-    }
-
-    .operationRow{
-        width:100%;
-    }
-
-    .operationBtn{
-        flex:1;
-        max-width:200px;
+        max-width:420px;
+        margin-bottom:20px;
     }
 }
 
@@ -364,22 +331,44 @@ body{
         <div class="lp" id="lp1">8000</div>
 
         <div class="plusMinus">
-            <button class="pmBtn" onclick="setMode(1,'minus')">−</button>
-            <button class="pmBtn" onclick="setMode(1,'plus')">+</button>
+
+            <button
+                class="pmBtn"
+                id="minus1"
+                onclick="setMode(1,'minus')"
+            >
+                −
+            </button>
+
+            <button
+                class="pmBtn"
+                id="plus1"
+                onclick="setMode(1,'plus')"
+            >
+                +
+            </button>
+
         </div>
 
-        <div class="preview" id="preview1"></div>
+        <div class="livePreview" id="preview1"></div>
 
-        <div class="numberGrid" id="numbers1"></div>
+        <input
+            id="input1"
+            class="lpInput"
+            type="number"
+            placeholder="LP eingeben..."
+            oninput="updatePreview(1)"
+        >
 
-        <div class="operationRow">
-            <button class="operationBtn" id="x2_1" onclick="setOperation(1,'x2')">
-                ×2
-            </button>
+        <div class="quickButtons">
 
-            <button class="operationBtn" id="d2_1" onclick="setOperation(1,'d2')">
-                ÷2
-            </button>
+            <button class="quickBtn" onclick="addQuick(1,1)">1</button>
+            <button class="quickBtn" onclick="addQuick(1,5)">5</button>
+            <button class="quickBtn" onclick="addQuick(1,10)">10</button>
+            <button class="quickBtn" onclick="addQuick(1,20)">20</button>
+            <button class="quickBtn" onclick="addQuick(1,50)">50</button>
+            <button class="quickBtn" onclick="addQuick(1,100)">100</button>
+
         </div>
 
         <button class="okBtn" onclick="applyAction(1)">
@@ -397,22 +386,44 @@ body{
         <div class="lp" id="lp2">8000</div>
 
         <div class="plusMinus">
-            <button class="pmBtn" onclick="setMode(2,'minus')">−</button>
-            <button class="pmBtn" onclick="setMode(2,'plus')">+</button>
+
+            <button
+                class="pmBtn"
+                id="minus2"
+                onclick="setMode(2,'minus')"
+            >
+                −
+            </button>
+
+            <button
+                class="pmBtn"
+                id="plus2"
+                onclick="setMode(2,'plus')"
+            >
+                +
+            </button>
+
         </div>
 
-        <div class="preview" id="preview2"></div>
+        <div class="livePreview" id="preview2"></div>
 
-        <div class="numberGrid" id="numbers2"></div>
+        <input
+            id="input2"
+            class="lpInput"
+            type="number"
+            placeholder="LP eingeben..."
+            oninput="updatePreview(2)"
+        >
 
-        <div class="operationRow">
-            <button class="operationBtn" id="x2_2" onclick="setOperation(2,'x2')">
-                ×2
-            </button>
+        <div class="quickButtons">
 
-            <button class="operationBtn" id="d2_2" onclick="setOperation(2,'d2')">
-                ÷2
-            </button>
+            <button class="quickBtn" onclick="addQuick(2,1)">1</button>
+            <button class="quickBtn" onclick="addQuick(2,5)">5</button>
+            <button class="quickBtn" onclick="addQuick(2,10)">10</button>
+            <button class="quickBtn" onclick="addQuick(2,20)">20</button>
+            <button class="quickBtn" onclick="addQuick(2,50)">50</button>
+            <button class="quickBtn" onclick="addQuick(2,100)">100</button>
+
         </div>
 
         <button class="okBtn" onclick="applyAction(2)">
@@ -423,7 +434,7 @@ body{
 
 </div>
 
-<!-- WIN SCREEN -->
+<!-- WIN -->
 
 <div id="winnerScreen" class="hidden">
 
@@ -435,36 +446,31 @@ body{
 
 <script>
 
-const values = [1,5,10,20,50,100];
-
 let players = {
+
     1:{
         lp:8000,
-        mode:null,
-        selected:null,
-        operation:null
+        mode:null
     },
 
     2:{
         lp:8000,
-        mode:null,
-        selected:null,
-        operation:null
+        mode:null
     }
 };
 
-/* START GAME */
+/* START */
 
 function startGame(){
 
-    const lp =
+    const startLP =
         parseInt(document.getElementById("startLP").value) || 8000;
 
-    players[1].lp = lp;
-    players[2].lp = lp;
+    players[1].lp = startLP;
+    players[2].lp = startLP;
 
-    document.getElementById("lp1").innerText = lp;
-    document.getElementById("lp2").innerText = lp;
+    document.getElementById("lp1").innerText = startLP;
+    document.getElementById("lp2").innerText = startLP;
 
     document.getElementById("player1Name").innerText =
         document.getElementById("p1Name").value || "Spieler 1";
@@ -475,112 +481,48 @@ function startGame(){
     document.getElementById("startScreen").classList.add("hidden");
     document.getElementById("game").classList.remove("hidden");
 
-    createButtons(1);
-    createButtons(2);
-
     resetPlayer(1);
     resetPlayer(2);
 }
 
-/* CREATE NUMBER BUTTONS */
-
-function createButtons(player){
-
-    const container =
-        document.getElementById("numbers"+player);
-
-    container.innerHTML = "";
-
-    values.forEach(value=>{
-
-        const btn = document.createElement("button");
-
-        btn.className = "numberBtn";
-        btn.innerText = value;
-
-        btn.onclick = ()=>{
-            selectNumber(player,value,btn);
-        };
-
-        container.appendChild(btn);
-    });
-}
-
-/* PLUS / MINUS */
+/* MODE */
 
 function setMode(player, mode){
 
     players[player].mode = mode;
 
-    updatePreview(player);
-}
-
-/* NUMBER SELECT */
-
-function selectNumber(player, value, btn){
-
-    players[player].selected = value;
-
-    const buttons =
-        document.querySelectorAll("#numbers"+player+" .numberBtn");
-
-    buttons.forEach(b=>{
-        b.classList.remove("selected");
-    });
-
-    btn.classList.add("selected");
-
-    document.getElementById("x2_"+player).disabled = true;
-    document.getElementById("d2_"+player).disabled = true;
-
-    updatePreview(player);
-}
-
-/* OPERATION */
-
-function setOperation(player, operation){
-
-    if(players[player].selected !== null){
-        return;
-    }
-
-    players[player].operation = operation;
-
-    document.getElementById("x2_"+player)
+    document.getElementById("minus"+player)
         .classList.remove("selected");
 
-    document.getElementById("d2_"+player)
+    document.getElementById("plus"+player)
         .classList.remove("selected");
 
-    if(operation === "x2"){
+    if(mode === "minus"){
 
-        document.getElementById("x2_"+player)
+        document.getElementById("minus"+player)
             .classList.add("selected");
 
     }else{
 
-        document.getElementById("d2_"+player)
+        document.getElementById("plus"+player)
             .classList.add("selected");
     }
 
     updatePreview(player);
 }
 
-/* GET AMOUNT */
+/* QUICK ADD */
 
-function getAmount(player){
+function addQuick(player, value){
 
-    let amount = players[player].selected || 0;
+    const input =
+        document.getElementById("input"+player);
 
-    if(players[player].operation === "x2"){
-        amount *= 2;
-    }
+    let current = parseInt(input.value) || 0;
 
-    if(players[player].operation === "d2"){
-        amount /= 2;
-    }
+    input.value = current + value;
 
-    return amount;
+    updatePreview(player);
 }
 
 /* PREVIEW */
@@ -590,15 +532,10 @@ function updatePreview(player){
     const preview =
         document.getElementById("preview"+player);
 
-    if(!players[player].mode){
+    const amount =
+        parseInt(document.getElementById("input"+player).value) || 0;
 
-        preview.innerText = "";
-        return;
-    }
-
-    const amount = getAmount(player);
-
-    if(amount === 0){
+    if(!players[player].mode || amount <= 0){
 
         preview.innerText = "";
         return;
@@ -620,10 +557,16 @@ function updatePreview(player){
 
 function applyAction(player){
 
-    if(players[player].selected === null) return;
-    if(!players[player].mode) return;
+    const amount =
+        parseInt(document.getElementById("input"+player).value);
 
-    const amount = getAmount(player);
+    if(!amount || amount <= 0){
+        return;
+    }
+
+    if(!players[player].mode){
+        return;
+    }
 
     if(players[player].mode === "minus"){
 
@@ -638,8 +581,8 @@ function applyAction(player){
         players[player].lp = 0;
     }
 
-    document.getElementById("lp"+player)
-        .innerText = Math.floor(players[player].lp);
+    document.getElementById("lp"+player).innerText =
+        players[player].lp;
 
     if(players[player].lp <= 0){
 
@@ -653,31 +596,20 @@ function applyAction(player){
 
 function resetPlayer(player){
 
-    players[player].selected = null;
-    players[player].operation = null;
+    document.getElementById("input"+player).value = "";
+
+    document.getElementById("preview"+player).innerText = "";
+
     players[player].mode = null;
 
-    document.getElementById("preview"+player)
-        .innerText = "";
-
-    const buttons =
-        document.querySelectorAll("#numbers"+player+" .numberBtn");
-
-    buttons.forEach(b=>{
-        b.classList.remove("selected");
-    });
-
-    document.getElementById("x2_"+player).disabled = false;
-    document.getElementById("d2_"+player).disabled = false;
-
-    document.getElementById("x2_"+player)
+    document.getElementById("minus"+player)
         .classList.remove("selected");
 
-    document.getElementById("d2_"+player)
+    document.getElementById("plus"+player)
         .classList.remove("selected");
 }
 
-/* WIN SCREEN */
+/* WIN */
 
 function showWinner(player){
 
