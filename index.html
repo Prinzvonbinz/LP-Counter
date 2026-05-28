@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LP Counter</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#0f0f0f;
+    color:white;
+    overflow:hidden;
+}
+
+button{
+    border:none;
+    cursor:pointer;
+    transition:0.15s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+button:disabled{
+    opacity:0.35;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* START SCREEN */
+
+#startScreen{
+    width:100vw;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.startBox{
+    background:#1c1c1c;
+    padding:40px;
+    border-radius:25px;
+    width:420px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    box-shadow:0 0 30px rgba(0,0,0,0.5);
+}
+
+.startBox h1{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.input{
+    background:#2b2b2b;
+    border:none;
+    outline:none;
+    color:white;
+    padding:16px;
+    border-radius:15px;
+    font-size:18px;
+}
+
+.startBtn{
+    background:#4f46e5;
+    color:white;
+    padding:18px;
+    border-radius:16px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+/* GAME */
+
+#game{
+    width:100vw;
+    height:100vh;
+    display:flex;
+}
+
+.player{
+    width:50%;
+    height:100%;
+    padding:25px;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+}
+
+.player:nth-child(1){
+    border-right:3px solid #222;
+}
+
+.playerName{
+    font-size:34px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.lp{
+    font-size:120px;
+    font-weight:bold;
+    margin-top:35px;
+}
+
+.plusMinus{
+    display:flex;
+    gap:12px;
+    margin-top:10px;
+}
+
+.pmBtn{
+    width:55px;
+    height:55px;
+    border-radius:16px;
+    background:#2b2b2b;
+    color:white;
+    font-size:30px;
+}
+
+.preview{
+    margin-top:20px;
+    min-height:40px;
+    font-size:30px;
+    font-weight:bold;
+    color:#aaaaaa;
+}
+
+.numberGrid{
+    margin-top:35px;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:14px;
+    width:320px;
+}
+
+.numberBtn{
+    background:#232323;
+    color:white;
+    padding:18px;
+    border-radius:18px;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.numberBtn.selected{
+    background:#4f46e5;
+}
+
+.operationRow{
+    margin-top:20px;
+    display:flex;
+    gap:15px;
+}
+
+.operationBtn{
+    background:#292929;
+    color:white;
+    width:90px;
+    height:55px;
+    border-radius:16px;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.operationBtn.selected{
+    background:#16a34a;
+}
+
+.okBtn{
+    margin-top:28px;
+    background:#4f46e5;
+    color:white;
+    padding:18px 45px;
+    border-radius:18px;
+    font-size:28px;
+    font-weight:bold;
+}
+
+/* WIN SCREEN */
+
+#winnerScreen{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.92);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:999;
+}
+
+#winnerText{
+    font-size:72px;
+    font-weight:bold;
+}
+
+#countdown{
+    margin-top:20px;
+    font-size:28px;
+    color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<!-- START -->
+
+<div id="startScreen">
+    <div class="startBox">
+        <h1>LP Counter</h1>
+
+        <input id="startLP" class="input" type="number" placeholder="Start LP" value="8000">
+
+        <input id="p1Name" class="input" type="text" placeholder="Spieler 1" value="Spieler 1">
+
+        <input id="p2Name" class="input" type="text" placeholder="Spieler 2" value="Spieler 2">
+
+        <button class="startBtn" onclick="startGame()">START</button>
+    </div>
+</div>
+
+<!-- GAME -->
+
+<div id="game" class="hidden">
+
+    <div class="player" id="player1">
+        <div class="playerName" id="player1Name"></div>
+
+        <div class="lp" id="lp1">8000</div>
+
+        <div class="plusMinus">
+            <button class="pmBtn" onclick="setMode(1,'minus')">−</button>
+            <button class="pmBtn" onclick="setMode(1,'plus')">+</button>
+        </div>
+
+        <div class="preview" id="preview1"></div>
+
+        <div class="numberGrid" id="numbers1"></div>
+
+        <div class="operationRow">
+            <button class="operationBtn" id="x2_1" onclick="setOperation(1,'x2')">×2</button>
+            <button class="operationBtn" id="d2_1" onclick="setOperation(1,'d2')">÷2</button>
+        </div>
+
+        <button class="okBtn" onclick="applyAction(1)">OK</button>
+    </div>
+
+    <div class="player" id="player2">
+        <div class="playerName" id="player2Name"></div>
+
+        <div class="lp" id="lp2">8000</div>
+
+        <div class="plusMinus">
+            <button class="pmBtn" onclick="setMode(2,'minus')">−</button>
+            <button class="pmBtn" onclick="setMode(2,'plus')">+</button>
+        </div>
+
+        <div class="preview" id="preview2"></div>
+
+        <div class="numberGrid" id="numbers2"></div>
+
+        <div class="operationRow">
+            <button class="operationBtn" id="x2_2" onclick="setOperation(2,'x2')">×2</button>
+            <button class="operationBtn" id="d2_2" onclick="setOperation(2,'d2')">÷2</button>
+        </div>
+
+        <button class="okBtn" onclick="applyAction(2)">OK</button>
+    </div>
+
+</div>
+
+<!-- WIN -->
+
+<div id="winnerScreen" class="hidden">
+    <div id="winnerText"></div>
+    <div id="countdown"></div>
+</div>
+
+<script>
+const values = [1,5,10,20,50,100];
+
+let players = {
+    1:{
+        lp:8000,
+        mode:null,
+        selected:null,
+        operation:null
+    },
+    2:{
+        lp:8000,
+        mode:null,
+        selected:null,
+        operation:null
+    }
+};
+
+function startGame(){
+
+    const lp = parseInt(document.getElementById("startLP").value) || 8000;
+
+    players[1].lp = lp;
+    players[2].lp = lp;
+
+    document.getElementById("lp1").innerText = lp;
+    document.getElementById("lp2").innerText = lp;
+
+    document.getElementById("player1Name").innerText =
+        document.getElementById("p1Name").value || "Spieler 1";
+
+    document.getElementById("player2Name").innerText =
+        document.getElementById("p2Name").value || "Spieler 2";
+
+    document.getElementById("startScreen").classList.add("hidden");
+    document.getElementById("game").classList.remove("hidden");
+
+    createButtons(1);
+    createButtons(2);
+
+    resetPlayer(1);
+    resetPlayer(2);
+}
+
+function createButtons(player){
+
+    const container = document.getElementById("numbers"+player);
+
+    container.innerHTML = "";
+
+    values.forEach(v=>{
+
+        const btn = document.createElement("button");
+
+        btn.className = "numberBtn";
+        btn.innerText = v;
+
+        btn.onclick = ()=>{
+            selectNumber(player,v,btn);
+        };
+
+        container.appendChild(btn);
+    });
+}
+
+function setMode(player, mode){
+
+    players[player].mode = mode;
+
+    updatePreview(player);
+}
+
+function selectNumber(player, value, btn){
+
+    players[player].selected = value;
+
+    const buttons = document.querySelectorAll("#numbers"+player+" .numberBtn");
+
+    buttons.forEach(b=>b.classList.remove("selected"));
+
+    btn.classList.add("selected");
+
+    document.getElementById("x2_"+player).disabled = true;
+    document.getElementById("d2_"+player).disabled = true;
+
+    updatePreview(player);
+}
+
+function setOperation(player, op){
+
+    if(players[player].selected !== null) return;
+
+    players[player].operation = op;
+
+    document.getElementById("x2_"+player).classList.remove("selected");
+    document.getElementById("d2_"+player).classList.remove("selected");
+
+    if(op === "x2"){
+        document.getElementById("x2_"+player).classList.add("selected");
+    }else{
+        document.getElementById("d2_"+player).classList.add("selected");
+    }
+
+    updatePreview(player);
+}
+
+function getAmount(player){
+
+    let amount = players[player].selected || 0;
+
+    if(players[player].operation === "x2"){
+        amount *= 2;
+    }
+
+    if(players[player].operation === "d2"){
+        amount /= 2;
+    }
+
+    return amount;
+}
+
+function updatePreview(player){
+
+    const preview = document.getElementById("preview"+player);
+
+    if(!players[player].mode){
+        preview.innerText = "";
+        return;
+    }
+
+    const amount = getAmount(player);
+
+    if(amount === 0){
+        preview.innerText = "";
+        return;
+    }
+
+    if(players[player].mode === "minus"){
+        preview.innerText = "− " + amount + " LP";
+    }else{
+        preview.innerText = "+ " + amount + " LP";
+    }
+}
+
+function applyAction(player){
+
+    if(players[player].selected === null) return;
+    if(!players[player].mode) return;
+
+    const amount = getAmount(player);
+
+    if(players[player].mode === "minus"){
+        players[player].lp -= amount;
+    }else{
+        players[player].lp += amount;
+    }
+
+    if(players[player].lp < 0){
+        players[player].lp = 0;
+    }
+
+    document.getElementById("lp"+player).innerText =
+        Math.floor(players[player].lp);
+
+    if(players[player].lp <= 0){
+
+        showWinner(player === 1 ? 2 : 1);
+    }
+
+    resetPlayer(player);
+}
+
+function resetPlayer(player){
+
+    players[player].selected = null;
+    players[player].operation = null;
+    players[player].mode = null;
+
+    document.getElementById("preview"+player).innerText = "";
+
+    const buttons = document.querySelectorAll("#numbers"+player+" .numberBtn");
+
+    buttons.forEach(b=>b.classList.remove("selected"));
+
+    document.getElementById("x2_"+player).disabled = false;
+    document.getElementById("d2_"+player).disabled = false;
+
+    document.getElementById("x2_"+player).classList.remove("selected");
+    document.getElementById("d2_"+player).classList.remove("selected");
+}
+
+function showWinner(player){
+
+    const winnerScreen = document.getElementById("winnerScreen");
+
+    winnerScreen.classList.remove("hidden");
+
+    document.getElementById("winnerText").innerText =
+        "Spieler " + player + " gewinnt!";
+
+    let time = 5;
+
+    document.getElementById("countdown").innerText =
+        "Zurück in " + time + "...";
+
+    const interval = setInterval(()=>{
+
+        time--;
+
+        document.getElementById("countdown").innerText =
+            "Zurück in " + time + "...";
+
+        if(time <= 0){
+
+            clearInterval(interval);
+
+            winnerScreen.classList.add("hidden");
+
+            document.getElementById("game").classList.add("hidden");
+            document.getElementById("startScreen").classList.remove("hidden");
+        }
+
+    },1000);
+}
+</script>
+
+</body>
+</html>
