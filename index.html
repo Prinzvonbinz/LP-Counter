@@ -2,19 +2,19 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 
-<title>LP Counter Pro</title>
+<title>LP Counter</title>
 
 <style>
 
 :root{
-    --bg:#0a0a0f;
-    --card:#16161f;
-    --card2:#1d1d29;
-    --border:#2a2a3a;
+    --bg:#07070b;
+    --card:#111118;
+    --card2:#181822;
+    --border:#2a2a38;
     --text:#ffffff;
-    --muted:#8b8ba7;
+    --muted:#9ca3af;
     --accent:#6366f1;
     --green:#22c55e;
     --red:#ef4444;
@@ -24,13 +24,27 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Inter, Arial, sans-serif;
+    font-family:Inter,Arial,sans-serif;
 }
 
-body{
-    background:linear-gradient(to bottom right,#09090f,#12121c);
-    color:var(--text);
+html,body{
+    width:100%;
+    height:100%;
     overflow:hidden;
+    background:
+        radial-gradient(circle at top left,#1a1a2e 0%,#07070b 55%);
+    color:var(--text);
+}
+
+/* GLOBAL */
+
+.hidden{
+    display:none !important;
+}
+
+button,
+input{
+    -webkit-tap-highlight-color:transparent;
 }
 
 /* START */
@@ -45,43 +59,41 @@ body{
 }
 
 .startCard{
-    width:100%;
-    max-width:480px;
-    background:rgba(22,22,31,0.96);
+    width:min(500px,100%);
+    background:rgba(17,17,24,0.97);
     border:1px solid var(--border);
     border-radius:32px;
-    padding:42px;
+    padding:32px;
     backdrop-filter:blur(14px);
     box-shadow:
-        0 0 40px rgba(0,0,0,0.45),
-        0 0 100px rgba(99,102,241,0.08);
+        0 0 50px rgba(0,0,0,0.45),
+        0 0 120px rgba(99,102,241,0.08);
 }
 
 .logo{
     text-align:center;
-    font-size:56px;
+    font-size:clamp(42px,7vw,64px);
     font-weight:900;
-    margin-bottom:36px;
-    letter-spacing:-2px;
+    margin-bottom:28px;
+    letter-spacing:-3px;
 }
 
 .startInputs{
     display:flex;
     flex-direction:column;
-    gap:16px;
+    gap:14px;
 }
 
 .startInput{
     width:100%;
-    border:none;
-    outline:none;
     background:var(--card2);
+    border:2px solid transparent;
+    outline:none;
     color:white;
     padding:18px;
     border-radius:18px;
     font-size:18px;
-    border:1px solid transparent;
-    transition:0.2s;
+    transition:0.18s;
 }
 
 .startInput:focus{
@@ -89,7 +101,7 @@ body{
 }
 
 .startBtn{
-    margin-top:10px;
+    margin-top:6px;
     width:100%;
     border:none;
     background:var(--accent);
@@ -99,11 +111,6 @@ body{
     font-size:24px;
     font-weight:800;
     cursor:pointer;
-    transition:0.2s;
-}
-
-.startBtn:hover{
-    transform:translateY(-2px);
 }
 
 /* GAME */
@@ -114,14 +121,15 @@ body{
     display:flex;
 }
 
+/* PLAYER */
+
 .player{
-    width:50%;
-    height:100%;
-    padding:30px;
+    flex:1;
+    padding:18px;
     display:flex;
     justify-content:center;
     align-items:center;
-    position:relative;
+    min-width:0;
 }
 
 .player:first-child{
@@ -131,128 +139,137 @@ body{
 .playerCard{
     width:100%;
     height:100%;
-    background:rgba(22,22,31,0.96);
+    background:rgba(17,17,24,0.96);
     border:1px solid var(--border);
-    border-radius:36px;
+    border-radius:32px;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    padding:35px;
-    backdrop-filter:blur(10px);
+    padding:20px;
+    gap:14px;
+    backdrop-filter:blur(12px);
+    overflow:hidden;
     box-shadow:
         0 0 30px rgba(0,0,0,0.35),
-        0 0 70px rgba(99,102,241,0.05);
+        0 0 100px rgba(99,102,241,0.04);
 }
 
 .playerName{
-    font-size:clamp(24px,3vw,42px);
+    font-size:clamp(20px,2.8vw,40px);
     font-weight:800;
     text-align:center;
+    max-width:100%;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
 .lp{
-    margin-top:15px;
-    font-size:clamp(70px,10vw,170px);
+    font-size:clamp(52px,10vw,160px);
     font-weight:900;
+    line-height:1;
     letter-spacing:-4px;
     text-align:center;
 }
 
+/* + / - */
+
 .modeButtons{
     display:flex;
-    gap:16px;
-    margin-top:24px;
+    gap:14px;
 }
 
 .modeBtn{
-    width:85px;
-    height:85px;
+    width:clamp(60px,7vw,88px);
+    height:clamp(60px,7vw,88px);
     border:none;
-    border-radius:24px;
+    border-radius:22px;
     background:var(--card2);
     color:white;
-    font-size:42px;
+    font-size:clamp(30px,4vw,46px);
     font-weight:700;
     cursor:pointer;
-    transition:0.18s;
+    transition:0.15s;
 }
 
-.modeBtn:hover{
-    transform:scale(1.05);
+.modeBtn:active{
+    transform:scale(0.96);
 }
 
-.modeBtn.activePlus{
-    background:var(--green);
-}
-
-.modeBtn.activeMinus{
+.modeBtn.minusActive{
     background:var(--red);
 }
 
+.modeBtn.plusActive{
+    background:var(--green);
+}
+
+/* INPUT */
+
 .amountInput{
-    margin-top:28px;
-    width:min(360px,90%);
-    border:none;
-    outline:none;
-    background:#111118;
+    width:min(360px,95%);
+    background:#0d0d13;
     border:2px solid var(--border);
+    outline:none;
     color:white;
-    text-align:center;
-    font-size:42px;
-    font-weight:800;
-    padding:22px;
+    padding:18px;
     border-radius:24px;
-    transition:0.2s;
+    text-align:center;
+    font-size:clamp(26px,4vw,44px);
+    font-weight:800;
+    transition:0.18s;
 }
 
 .amountInput:focus{
     border-color:var(--accent);
 }
 
+/* PREVIEW */
+
 .preview{
-    margin-top:18px;
-    min-height:40px;
-    font-size:30px;
-    font-weight:700;
+    min-height:34px;
+    font-size:clamp(18px,2vw,30px);
     color:var(--muted);
+    font-weight:700;
     text-align:center;
 }
 
+/* OK BUTTON */
+
 .okBtn{
-    margin-top:28px;
-    width:min(360px,90%);
+    width:min(360px,95%);
     border:none;
     background:var(--accent);
     color:white;
-    padding:20px;
+    padding:18px;
     border-radius:24px;
-    font-size:28px;
+    font-size:clamp(22px,3vw,32px);
     font-weight:900;
     cursor:pointer;
-    transition:0.18s;
+    transition:0.15s;
 }
 
-.okBtn:hover{
-    transform:translateY(-2px);
+.okBtn:active{
+    transform:scale(0.98);
 }
 
-/* WIN SCREEN */
+/* WIN */
 
 #winnerScreen{
     position:fixed;
     inset:0;
-    background:rgba(5,5,10,0.94);
-    backdrop-filter:blur(16px);
+    background:rgba(4,4,8,0.94);
+    backdrop-filter:blur(14px);
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
     z-index:999;
+    padding:20px;
 }
 
 #winnerText{
-    font-size:clamp(42px,7vw,90px);
+    font-size:clamp(42px,8vw,100px);
     font-weight:900;
     text-align:center;
     letter-spacing:-3px;
@@ -260,31 +277,28 @@ body{
 
 #winnerSub{
     margin-top:18px;
-    font-size:clamp(18px,2vw,30px);
     color:var(--muted);
-}
-
-.hidden{
-    display:none !important;
+    font-size:clamp(18px,3vw,32px);
 }
 
 /* PORTRAIT */
 
-@media (orientation: portrait){
+@media (orientation:portrait){
 
-    body{
+    html,body{
         overflow:auto;
     }
 
     #game{
         flex-direction:column;
-        overflow:auto;
+        height:auto;
+        min-height:100vh;
     }
 
     .player{
         width:100%;
         min-height:50vh;
-        padding:18px;
+        padding:12px;
     }
 
     .player:first-child{
@@ -292,26 +306,29 @@ body{
     }
 
     .playerCard{
-        border-radius:28px;
+        min-height:calc(50vh - 24px);
+        gap:12px;
+        padding:16px;
     }
 
     .lp{
-        font-size:clamp(64px,18vw,140px);
-    }
-
-    .modeBtn{
-        width:72px;
-        height:72px;
-        font-size:34px;
+        font-size:clamp(56px,17vw,130px);
     }
 
     .amountInput{
-        width:95%;
-        font-size:36px;
+        width:100%;
+        font-size:34px;
+        padding:16px;
     }
 
     .okBtn{
-        width:95%;
+        width:100%;
+    }
+
+    .modeBtn{
+        width:68px;
+        height:68px;
+        font-size:36px;
     }
 }
 
@@ -325,7 +342,9 @@ body{
 
     <div class="startCard">
 
-        <div class="logo">LP Counter</div>
+        <div class="logo">
+            LP Counter
+        </div>
 
         <div class="startInputs">
 
@@ -353,7 +372,10 @@ body{
                 placeholder="Spieler 2"
             >
 
-            <button class="startBtn" onclick="startGame()">
+            <button
+                class="startBtn"
+                onclick="startGame()"
+            >
                 START
             </button>
 
@@ -384,16 +406,16 @@ body{
             <div class="modeButtons">
 
                 <button
-                    id="minus1"
                     class="modeBtn"
+                    id="minus1"
                     onclick="setMode(1,'minus')"
                 >
                     −
                 </button>
 
                 <button
-                    id="plus1"
                     class="modeBtn"
+                    id="plus1"
                     onclick="setMode(1,'plus')"
                 >
                     +
@@ -405,11 +427,14 @@ body{
                 id="input1"
                 class="amountInput"
                 type="number"
-                placeholder="LP"
+                placeholder="LP eingeben"
                 oninput="updatePreview(1)"
             >
 
-            <div class="preview" id="preview1"></div>
+            <div
+                class="preview"
+                id="preview1"
+            ></div>
 
             <button
                 class="okBtn"
@@ -439,16 +464,16 @@ body{
             <div class="modeButtons">
 
                 <button
-                    id="minus2"
                     class="modeBtn"
+                    id="minus2"
                     onclick="setMode(2,'minus')"
                 >
                     −
                 </button>
 
                 <button
-                    id="plus2"
                     class="modeBtn"
+                    id="plus2"
                     onclick="setMode(2,'plus')"
                 >
                     +
@@ -460,11 +485,14 @@ body{
                 id="input2"
                 class="amountInput"
                 type="number"
-                placeholder="LP"
+                placeholder="LP eingeben"
                 oninput="updatePreview(2)"
             >
 
-            <div class="preview" id="preview2"></div>
+            <div
+                class="preview"
+                id="preview2"
+            ></div>
 
             <button
                 class="okBtn"
@@ -537,7 +565,7 @@ function startGame(){
 
 /* MODE */
 
-function setMode(player, mode){
+function setMode(player,mode){
 
     players[player].mode = mode;
 
@@ -547,16 +575,16 @@ function setMode(player, mode){
     const plus =
         document.getElementById("plus"+player);
 
-    minus.classList.remove("activeMinus");
-    plus.classList.remove("activePlus");
+    minus.classList.remove("minusActive");
+    plus.classList.remove("plusActive");
 
     if(mode === "minus"){
 
-        minus.classList.add("activeMinus");
+        minus.classList.add("minusActive");
 
     }else{
 
-        plus.classList.add("activePlus");
+        plus.classList.add("plusActive");
     }
 
     updatePreview(player);
@@ -601,13 +629,8 @@ function applyLP(player){
             document.getElementById("input"+player).value
         );
 
-    if(!players[player].mode){
-        return;
-    }
-
-    if(!value || value <= 0){
-        return;
-    }
+    if(!players[player].mode) return;
+    if(!value || value <= 0) return;
 
     if(players[player].mode === "minus"){
 
@@ -619,11 +642,12 @@ function applyLP(player){
     }
 
     if(players[player].lp < 0){
+
         players[player].lp = 0;
     }
 
-    document.getElementById("lp"+player).innerText =
-        players[player].lp;
+    document.getElementById("lp"+player)
+        .innerText = players[player].lp;
 
     if(players[player].lp <= 0){
 
@@ -643,13 +667,14 @@ function resetPlayer(player){
 
     document.getElementById("input"+player).value = "";
 
-    document.getElementById("preview"+player).innerText = "";
+    document.getElementById("preview"+player)
+        .innerText = "";
 
     document.getElementById("minus"+player)
-        .classList.remove("activeMinus");
+        .classList.remove("minusActive");
 
     document.getElementById("plus"+player)
-        .classList.remove("activePlus");
+        .classList.remove("plusActive");
 }
 
 /* WIN */
