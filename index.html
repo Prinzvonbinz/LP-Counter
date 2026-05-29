@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>LP Counter</title>
+<title>LP Counter Pro</title>
 
 <style>
+
+:root{
+    --bg:#0a0a0f;
+    --card:#16161f;
+    --card2:#1d1d29;
+    --border:#2a2a3a;
+    --text:#ffffff;
+    --muted:#8b8ba7;
+    --accent:#6366f1;
+    --green:#22c55e;
+    --red:#ef4444;
+}
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:Inter, Arial, sans-serif;
 }
 
 body{
-    background:#0f0f0f;
-    color:white;
+    background:linear-gradient(to bottom right,#09090f,#12121c);
+    color:var(--text);
     overflow:hidden;
 }
 
-/* START SCREEN */
+/* START */
 
 #startScreen{
     width:100vw;
@@ -32,48 +44,66 @@ body{
     padding:20px;
 }
 
-.startBox{
+.startCard{
     width:100%;
-    max-width:450px;
-    background:#1b1b1b;
-    padding:40px;
-    border-radius:28px;
+    max-width:480px;
+    background:rgba(22,22,31,0.96);
+    border:1px solid var(--border);
+    border-radius:32px;
+    padding:42px;
+    backdrop-filter:blur(14px);
+    box-shadow:
+        0 0 40px rgba(0,0,0,0.45),
+        0 0 100px rgba(99,102,241,0.08);
+}
+
+.logo{
+    text-align:center;
+    font-size:56px;
+    font-weight:900;
+    margin-bottom:36px;
+    letter-spacing:-2px;
+}
+
+.startInputs{
     display:flex;
     flex-direction:column;
-    gap:18px;
-    box-shadow:0 0 40px rgba(0,0,0,0.5);
+    gap:16px;
 }
 
-.startBox h1{
-    text-align:center;
-    font-size:48px;
-}
-
-.input{
+.startInput{
     width:100%;
-    background:#2a2a2a;
     border:none;
     outline:none;
+    background:var(--card2);
     color:white;
     padding:18px;
     border-radius:18px;
     font-size:18px;
+    border:1px solid transparent;
+    transition:0.2s;
+}
+
+.startInput:focus{
+    border-color:var(--accent);
 }
 
 .startBtn{
-    background:#4f46e5;
-    color:white;
+    margin-top:10px;
+    width:100%;
     border:none;
+    background:var(--accent);
+    color:white;
     padding:18px;
-    border-radius:18px;
+    border-radius:20px;
     font-size:24px;
-    font-weight:bold;
+    font-weight:800;
     cursor:pointer;
-    transition:0.15s;
+    transition:0.2s;
 }
 
 .startBtn:hover{
-    transform:scale(1.03);
+    transform:translateY(-2px);
 }
 
 /* GAME */
@@ -87,117 +117,124 @@ body{
 .player{
     width:50%;
     height:100%;
-    padding:25px;
+    padding:30px;
     display:flex;
-    flex-direction:column;
-    align-items:center;
     justify-content:center;
-    overflow:auto;
+    align-items:center;
+    position:relative;
 }
 
-.player:nth-child(1){
-    border-right:3px solid #202020;
+.player:first-child{
+    border-right:1px solid var(--border);
+}
+
+.playerCard{
+    width:100%;
+    height:100%;
+    background:rgba(22,22,31,0.96);
+    border:1px solid var(--border);
+    border-radius:36px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:35px;
+    backdrop-filter:blur(10px);
+    box-shadow:
+        0 0 30px rgba(0,0,0,0.35),
+        0 0 70px rgba(99,102,241,0.05);
 }
 
 .playerName{
-    font-size:clamp(24px, 3vw, 38px);
-    font-weight:bold;
+    font-size:clamp(24px,3vw,42px);
+    font-weight:800;
     text-align:center;
 }
 
 .lp{
-    font-size:clamp(70px, 10vw, 150px);
-    font-weight:bold;
-    margin-top:20px;
+    margin-top:15px;
+    font-size:clamp(70px,10vw,170px);
+    font-weight:900;
+    letter-spacing:-4px;
     text-align:center;
 }
 
-.plusMinus{
+.modeButtons{
     display:flex;
-    gap:14px;
-    margin-top:25px;
+    gap:16px;
+    margin-top:24px;
 }
 
-.pmBtn{
-    width:70px;
-    height:70px;
+.modeBtn{
+    width:85px;
+    height:85px;
     border:none;
-    border-radius:20px;
-    background:#262626;
+    border-radius:24px;
+    background:var(--card2);
     color:white;
-    font-size:36px;
+    font-size:42px;
+    font-weight:700;
     cursor:pointer;
-    transition:0.15s;
+    transition:0.18s;
 }
 
-.pmBtn.selected{
-    background:#4f46e5;
-}
-
-.pmBtn:hover{
+.modeBtn:hover{
     transform:scale(1.05);
 }
 
-.livePreview{
-    margin-top:20px;
-    font-size:28px;
-    color:#a1a1aa;
-    min-height:40px;
-    text-align:center;
+.modeBtn.activePlus{
+    background:var(--green);
 }
 
-.lpInput{
-    margin-top:18px;
-    width:min(340px, 90%);
-    background:#252525;
+.modeBtn.activeMinus{
+    background:var(--red);
+}
+
+.amountInput{
+    margin-top:28px;
+    width:min(360px,90%);
     border:none;
     outline:none;
+    background:#111118;
+    border:2px solid var(--border);
     color:white;
-    padding:18px;
-    border-radius:20px;
     text-align:center;
+    font-size:42px;
+    font-weight:800;
+    padding:22px;
+    border-radius:24px;
+    transition:0.2s;
+}
+
+.amountInput:focus{
+    border-color:var(--accent);
+}
+
+.preview{
+    margin-top:18px;
+    min-height:40px;
     font-size:30px;
-}
-
-.quickButtons{
-    margin-top:20px;
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
-    justify-content:center;
-}
-
-.quickBtn{
-    background:#232323;
-    color:white;
-    border:none;
-    padding:14px 18px;
-    border-radius:16px;
-    font-size:22px;
-    cursor:pointer;
-    transition:0.15s;
-}
-
-.quickBtn:hover{
-    transform:scale(1.05);
+    font-weight:700;
+    color:var(--muted);
+    text-align:center;
 }
 
 .okBtn{
     margin-top:28px;
-    width:min(340px, 90%);
-    background:#4f46e5;
-    color:white;
+    width:min(360px,90%);
     border:none;
-    padding:18px;
-    border-radius:20px;
+    background:var(--accent);
+    color:white;
+    padding:20px;
+    border-radius:24px;
     font-size:28px;
-    font-weight:bold;
+    font-weight:900;
     cursor:pointer;
-    transition:0.15s;
+    transition:0.18s;
 }
 
 .okBtn:hover{
-    transform:scale(1.05);
+    transform:translateY(-2px);
 }
 
 /* WIN SCREEN */
@@ -205,24 +242,26 @@ body{
 #winnerScreen{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,0.95);
+    background:rgba(5,5,10,0.94);
+    backdrop-filter:blur(16px);
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
-    flex-direction:column;
     z-index:999;
 }
 
 #winnerText{
-    font-size:clamp(40px, 7vw, 80px);
-    font-weight:bold;
+    font-size:clamp(42px,7vw,90px);
+    font-weight:900;
     text-align:center;
+    letter-spacing:-3px;
 }
 
-#countdown{
+#winnerSub{
     margin-top:18px;
-    color:#9ca3af;
-    font-size:clamp(18px, 3vw, 30px);
+    font-size:clamp(18px,2vw,30px);
+    color:var(--muted);
 }
 
 .hidden{
@@ -245,74 +284,80 @@ body{
     .player{
         width:100%;
         min-height:50vh;
+        padding:18px;
     }
 
-    .player:nth-child(1){
+    .player:first-child{
         border-right:none;
-        border-bottom:3px solid #202020;
+    }
+
+    .playerCard{
+        border-radius:28px;
     }
 
     .lp{
-        font-size:clamp(70px, 18vw, 140px);
+        font-size:clamp(64px,18vw,140px);
     }
 
-    .pmBtn{
-        width:65px;
-        height:65px;
+    .modeBtn{
+        width:72px;
+        height:72px;
+        font-size:34px;
     }
 
-    .lpInput{
+    .amountInput{
         width:95%;
-        max-width:420px;
+        font-size:36px;
     }
 
     .okBtn{
         width:95%;
-        max-width:420px;
-        margin-bottom:20px;
     }
 }
 
 </style>
 </head>
-
 <body>
 
 <!-- START -->
 
 <div id="startScreen">
 
-    <div class="startBox">
+    <div class="startCard">
 
-        <h1>LP Counter</h1>
+        <div class="logo">LP Counter</div>
 
-        <input
-            id="startLP"
-            class="input"
-            type="number"
-            value="8000"
-            placeholder="Start LP"
-        >
+        <div class="startInputs">
 
-        <input
-            id="p1Name"
-            class="input"
-            type="text"
-            value="Spieler 1"
-            placeholder="Spieler 1"
-        >
+            <input
+                id="startLP"
+                class="startInput"
+                type="number"
+                value="8000"
+                placeholder="Start LP"
+            >
 
-        <input
-            id="p2Name"
-            class="input"
-            type="text"
-            value="Spieler 2"
-            placeholder="Spieler 2"
-        >
+            <input
+                id="p1Name"
+                class="startInput"
+                type="text"
+                value="Spieler 1"
+                placeholder="Spieler 1"
+            >
 
-        <button class="startBtn" onclick="startGame()">
-            START
-        </button>
+            <input
+                id="p2Name"
+                class="startInput"
+                type="text"
+                value="Spieler 2"
+                placeholder="Spieler 2"
+            >
+
+            <button class="startBtn" onclick="startGame()">
+                START
+            </button>
+
+        </div>
 
     </div>
 
@@ -326,54 +371,54 @@ body{
 
     <div class="player">
 
-        <div class="playerName" id="player1Name"></div>
+        <div class="playerCard">
 
-        <div class="lp" id="lp1">8000</div>
+            <div class="playerName" id="name1">
+                Spieler 1
+            </div>
 
-        <div class="plusMinus">
+            <div class="lp" id="lp1">
+                8000
+            </div>
+
+            <div class="modeButtons">
+
+                <button
+                    id="minus1"
+                    class="modeBtn"
+                    onclick="setMode(1,'minus')"
+                >
+                    −
+                </button>
+
+                <button
+                    id="plus1"
+                    class="modeBtn"
+                    onclick="setMode(1,'plus')"
+                >
+                    +
+                </button>
+
+            </div>
+
+            <input
+                id="input1"
+                class="amountInput"
+                type="number"
+                placeholder="LP"
+                oninput="updatePreview(1)"
+            >
+
+            <div class="preview" id="preview1"></div>
 
             <button
-                class="pmBtn"
-                id="minus1"
-                onclick="setMode(1,'minus')"
+                class="okBtn"
+                onclick="applyLP(1)"
             >
-                −
-            </button>
-
-            <button
-                class="pmBtn"
-                id="plus1"
-                onclick="setMode(1,'plus')"
-            >
-                +
+                OK
             </button>
 
         </div>
-
-        <div class="livePreview" id="preview1"></div>
-
-        <input
-            id="input1"
-            class="lpInput"
-            type="number"
-            placeholder="LP eingeben..."
-            oninput="updatePreview(1)"
-        >
-
-        <div class="quickButtons">
-
-            <button class="quickBtn" onclick="addQuick(1,1)">1</button>
-            <button class="quickBtn" onclick="addQuick(1,5)">5</button>
-            <button class="quickBtn" onclick="addQuick(1,10)">10</button>
-            <button class="quickBtn" onclick="addQuick(1,20)">20</button>
-            <button class="quickBtn" onclick="addQuick(1,50)">50</button>
-            <button class="quickBtn" onclick="addQuick(1,100)">100</button>
-
-        </div>
-
-        <button class="okBtn" onclick="applyAction(1)">
-            OK
-        </button>
 
     </div>
 
@@ -381,54 +426,54 @@ body{
 
     <div class="player">
 
-        <div class="playerName" id="player2Name"></div>
+        <div class="playerCard">
 
-        <div class="lp" id="lp2">8000</div>
+            <div class="playerName" id="name2">
+                Spieler 2
+            </div>
 
-        <div class="plusMinus">
+            <div class="lp" id="lp2">
+                8000
+            </div>
+
+            <div class="modeButtons">
+
+                <button
+                    id="minus2"
+                    class="modeBtn"
+                    onclick="setMode(2,'minus')"
+                >
+                    −
+                </button>
+
+                <button
+                    id="plus2"
+                    class="modeBtn"
+                    onclick="setMode(2,'plus')"
+                >
+                    +
+                </button>
+
+            </div>
+
+            <input
+                id="input2"
+                class="amountInput"
+                type="number"
+                placeholder="LP"
+                oninput="updatePreview(2)"
+            >
+
+            <div class="preview" id="preview2"></div>
 
             <button
-                class="pmBtn"
-                id="minus2"
-                onclick="setMode(2,'minus')"
+                class="okBtn"
+                onclick="applyLP(2)"
             >
-                −
-            </button>
-
-            <button
-                class="pmBtn"
-                id="plus2"
-                onclick="setMode(2,'plus')"
-            >
-                +
+                OK
             </button>
 
         </div>
-
-        <div class="livePreview" id="preview2"></div>
-
-        <input
-            id="input2"
-            class="lpInput"
-            type="number"
-            placeholder="LP eingeben..."
-            oninput="updatePreview(2)"
-        >
-
-        <div class="quickButtons">
-
-            <button class="quickBtn" onclick="addQuick(2,1)">1</button>
-            <button class="quickBtn" onclick="addQuick(2,5)">5</button>
-            <button class="quickBtn" onclick="addQuick(2,10)">10</button>
-            <button class="quickBtn" onclick="addQuick(2,20)">20</button>
-            <button class="quickBtn" onclick="addQuick(2,50)">50</button>
-            <button class="quickBtn" onclick="addQuick(2,100)">100</button>
-
-        </div>
-
-        <button class="okBtn" onclick="applyAction(2)">
-            OK
-        </button>
 
     </div>
 
@@ -440,7 +485,7 @@ body{
 
     <div id="winnerText"></div>
 
-    <div id="countdown"></div>
+    <div id="winnerSub"></div>
 
 </div>
 
@@ -464,7 +509,9 @@ let players = {
 function startGame(){
 
     const startLP =
-        parseInt(document.getElementById("startLP").value) || 8000;
+        parseInt(
+            document.getElementById("startLP").value
+        ) || 8000;
 
     players[1].lp = startLP;
     players[2].lp = startLP;
@@ -472,14 +519,17 @@ function startGame(){
     document.getElementById("lp1").innerText = startLP;
     document.getElementById("lp2").innerText = startLP;
 
-    document.getElementById("player1Name").innerText =
+    document.getElementById("name1").innerText =
         document.getElementById("p1Name").value || "Spieler 1";
 
-    document.getElementById("player2Name").innerText =
+    document.getElementById("name2").innerText =
         document.getElementById("p2Name").value || "Spieler 2";
 
-    document.getElementById("startScreen").classList.add("hidden");
-    document.getElementById("game").classList.remove("hidden");
+    document.getElementById("startScreen")
+        .classList.add("hidden");
+
+    document.getElementById("game")
+        .classList.remove("hidden");
 
     resetPlayer(1);
     resetPlayer(2);
@@ -491,36 +541,23 @@ function setMode(player, mode){
 
     players[player].mode = mode;
 
-    document.getElementById("minus"+player)
-        .classList.remove("selected");
+    const minus =
+        document.getElementById("minus"+player);
 
-    document.getElementById("plus"+player)
-        .classList.remove("selected");
+    const plus =
+        document.getElementById("plus"+player);
+
+    minus.classList.remove("activeMinus");
+    plus.classList.remove("activePlus");
 
     if(mode === "minus"){
 
-        document.getElementById("minus"+player)
-            .classList.add("selected");
+        minus.classList.add("activeMinus");
 
     }else{
 
-        document.getElementById("plus"+player)
-            .classList.add("selected");
+        plus.classList.add("activePlus");
     }
-
-    updatePreview(player);
-}
-
-/* QUICK ADD */
-
-function addQuick(player, value){
-
-    const input =
-        document.getElementById("input"+player);
-
-    let current = parseInt(input.value) || 0;
-
-    input.value = current + value;
 
     updatePreview(player);
 }
@@ -529,13 +566,15 @@ function addQuick(player, value){
 
 function updatePreview(player){
 
+    const value =
+        parseInt(
+            document.getElementById("input"+player).value
+        ) || 0;
+
     const preview =
         document.getElementById("preview"+player);
 
-    const amount =
-        parseInt(document.getElementById("input"+player).value) || 0;
-
-    if(!players[player].mode || amount <= 0){
+    if(!players[player].mode || value <= 0){
 
         preview.innerText = "";
         return;
@@ -544,37 +583,39 @@ function updatePreview(player){
     if(players[player].mode === "minus"){
 
         preview.innerText =
-            "− " + amount + " LP";
+            "− " + value + " LP";
 
     }else{
 
         preview.innerText =
-            "+ " + amount + " LP";
+            "+ " + value + " LP";
     }
 }
 
 /* APPLY */
 
-function applyAction(player){
+function applyLP(player){
 
-    const amount =
-        parseInt(document.getElementById("input"+player).value);
-
-    if(!amount || amount <= 0){
-        return;
-    }
+    const value =
+        parseInt(
+            document.getElementById("input"+player).value
+        );
 
     if(!players[player].mode){
         return;
     }
 
+    if(!value || value <= 0){
+        return;
+    }
+
     if(players[player].mode === "minus"){
 
-        players[player].lp -= amount;
+        players[player].lp -= value;
 
     }else{
 
-        players[player].lp += amount;
+        players[player].lp += value;
     }
 
     if(players[player].lp < 0){
@@ -586,7 +627,9 @@ function applyAction(player){
 
     if(players[player].lp <= 0){
 
-        showWinner(player === 1 ? 2 : 1);
+        showWinner(
+            player === 1 ? 2 : 1
+        );
     }
 
     resetPlayer(player);
@@ -596,48 +639,47 @@ function applyAction(player){
 
 function resetPlayer(player){
 
+    players[player].mode = null;
+
     document.getElementById("input"+player).value = "";
 
     document.getElementById("preview"+player).innerText = "";
 
-    players[player].mode = null;
-
     document.getElementById("minus"+player)
-        .classList.remove("selected");
+        .classList.remove("activeMinus");
 
     document.getElementById("plus"+player)
-        .classList.remove("selected");
+        .classList.remove("activePlus");
 }
 
 /* WIN */
 
-function showWinner(player){
+function showWinner(winner){
 
-    const winnerScreen =
-        document.getElementById("winnerScreen");
-
-    winnerScreen.classList.remove("hidden");
+    document.getElementById("winnerScreen")
+        .classList.remove("hidden");
 
     document.getElementById("winnerText").innerText =
-        "Spieler " + player + " gewinnt!";
+        "Spieler " + winner + " gewinnt";
 
     let time = 5;
 
-    document.getElementById("countdown").innerText =
+    document.getElementById("winnerSub").innerText =
         "Zurück in " + time + "...";
 
     const interval = setInterval(()=>{
 
         time--;
 
-        document.getElementById("countdown").innerText =
+        document.getElementById("winnerSub").innerText =
             "Zurück in " + time + "...";
 
         if(time <= 0){
 
             clearInterval(interval);
 
-            winnerScreen.classList.add("hidden");
+            document.getElementById("winnerScreen")
+                .classList.add("hidden");
 
             document.getElementById("game")
                 .classList.add("hidden");
